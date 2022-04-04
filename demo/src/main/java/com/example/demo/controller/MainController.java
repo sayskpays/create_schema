@@ -2,9 +2,11 @@ package com.example.demo.controller;
 
 
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 
 
@@ -13,8 +15,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
     
     @GetMapping("/hello")
-    public String hello(Model model) {
-        model.addAttribute("data", "hello rptp!!");
-        return "hello";
+    public ModelAndView hello(HttpServletRequest request) {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("hello");
+        return mv;
     }
 }
