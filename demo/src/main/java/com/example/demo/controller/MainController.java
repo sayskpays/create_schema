@@ -33,7 +33,14 @@ public class MainController {
         //String 생성해놓고 ArrayList 또는 String 배열로 관리
         ArrayList<String> dataList = new ArrayList<>();
 
-        // 들어오는 데이터에 따라서 여기서 조건 분기로 xml data 나눠주는 방법?
+        /*
+        들어오는 데이터에 따라서 여기서 조건 분기로 xml data 나눠주는 방법?
+        String[] 으로 column을 쭉 저장
+
+        
+        System.out.format("%s". Arrays.toString(your_array));
+        infoText.text = $"Player1: {place[0]}\nPlayer2: {place[1]} \nPlayer3: {place[2]} \nPlayer4: {place[3]}";
+        */
         for(int i=0;i<count;i++){
             String xml_data = String.format("<xs:element name='%s'\tform='%s'\ttype='%s'\t/>", name , form, type);
             dataList.add(xml_data);
