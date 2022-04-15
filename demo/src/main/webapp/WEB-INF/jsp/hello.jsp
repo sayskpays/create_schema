@@ -1,4 +1,5 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,8 +25,12 @@
             <div class="form-group">
                 <label for="exampleFormControlTextarea1">OutPut data</label>
                 
-                <textarea class="form-control" id="exampleFormControlTextarea1" rows="20">${xml_data}</textarea>
-    
+                <div class="textarea-group">
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="15">${xml_data}</textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="15">${column_data}</textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="15"><c:forEach var="tmp" items="${selectList}"><c:forEach var="list" items="${tmp}">${list}</c:forEach></c:forEach></textarea>
+
+                </div>   
             </div>
             <button type="button" class="btn btn-outline-primary">Home</button>
         </form>
