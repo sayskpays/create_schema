@@ -23,11 +23,12 @@ public class MainController {
         ArrayList<String> columnList = new ArrayList<>();
         // Select 스키마 저장 리스트
         ArrayList<String[]> selectList = new ArrayList<>();
+        // Record 스키마 저장 리스트
+        ArrayList<String> recordList = new ArrayList<>();
 
         String form_varchar = "xs:string";
         String type_number = "xs:decimal";
         String type_nill = "nillable='true'";
-        
 
         // 폼에서 전달해주는 input data
         String data = request.getParameter("id");
@@ -54,14 +55,8 @@ public class MainController {
 
             int indexData = dataColumn[i].indexOf("\" ");
             index_data.add(indexData);
-
-            // 인덱스 숫자
-            //System.out.println(indexData);
-
             columnList.add(dataColumn[i].substring(1,indexData));
 
-            // 컬럼 데이터 리스트
-            //System.out.println("columnList : " + columnList.get(i));
         }
 
         for (int i = 0; i < dataColumn.length; i++) {
@@ -74,9 +69,12 @@ public class MainController {
                 String select_schema03 = String.format("<QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>").trim();
                 String select_schema04 = String.format("<QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>").trim();
 
+                String record_data = String.format("<%s>\r\n<xs:value-of select=\"%s\"/>\r\n</%s>\r\n",columnList.get(i),columnList.get(i),columnList.get(i));
+
                 String[] select_schema = {select_schema01,select_schema02,select_schema03,select_schema04};
                 selectList.add(select_schema);              
                 create_data.add(xml_data);
+                recordList.add(record_data);
 
                 // not null , number
             } else if (dataColumn[i].contains("NOT") && dataColumn[i].contains("NUMBER")) {
@@ -87,9 +85,11 @@ public class MainController {
                 String select_schema03 = String.format("<QueryOutputCachedSchemaDataTypesName>NUMBER</QueryOutputCachedSchemaDataTypesName>").trim();
                 String select_schema04 = String.format("<QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>").trim();
 
+                String record_data = String.format("<%s>\r\n<xs:value-of select=\"%s\"/>\r\n</%s>\r\n",columnList.get(i),columnList.get(i),columnList.get(i));
                 String[] select_schema = {select_schema01,select_schema02,select_schema03,select_schema04};
+
                 selectList.add(select_schema);     
-        
+                recordList.add(record_data);
                 create_data.add(xml_data);
 
                 // nillable , string
@@ -101,9 +101,10 @@ public class MainController {
                 String select_schema03 = String.format("<QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>").trim();
                 String select_schema04 = String.format("<QueryOutputCachedSchemaStatus>NillableElement</QueryOutputCachedSchemaStatus>").trim();
 
+                String record_data = String.format("<%s>\r\n<xs:copy-of select=\"%s\"/@xsi:nil>\r\n<xs:value-of select=\"%s\"/>\r\n</%s>\r\n",columnList.get(i),columnList.get(i),columnList.get(i),columnList.get(i));
                 String[] select_schema = {select_schema01,select_schema02,select_schema03,select_schema04};
                 selectList.add(select_schema);    
-
+                recordList.add(record_data);
                 create_data.add(xml_data);
                 // nillable , number
             } else if (dataColumn[i].contains("NUMBER")) {
@@ -113,20 +114,15 @@ public class MainController {
                 String select_schema02 = String.format("<QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>").trim();
                 String select_schema03 = String.format("<QueryOutputCachedSchemaDataTypesName>NUMBER</QueryOutputCachedSchemaDataTypesName>").trim();
                 String select_schema04 = String.format("<QueryOutputCachedSchemaStatus>NillableElement</QueryOutputCachedSchemaStatus>").trim();
-
+                String record_data = String.format("<%s>\r\n<xs:copy-of select=\"%s\"/@xsi:nil>\r\n<xs:value-of select=\"%s\"/>\r\n</%s>\r\n",columnList.get(i),columnList.get(i),columnList.get(i),columnList.get(i));
                 String[] select_schema = {select_schema01,select_schema02,select_schema03,select_schema04};
                 selectList.add(select_schema);    
-
+                recordList.add(record_data);
                 create_data.add(xml_data);
             }
         }
-        
-        for(String[] a:selectList){
-            for(String b :a){
-                System.out.println(b);  
-            }
-        }
 
+        mv.addObject("recordList",recordList);
         mv.addObject("selectList", selectList);
         mv.addObject("xml_data", create_data);
         mv.addObject("column_data", columnList);
@@ -137,7 +133,7 @@ public class MainController {
     @PostMapping("/error") 
     public ModelAndView error(HttpServletRequest request, ModelAndView mv) {
         mv.setViewName("error");
-        
+
         return mv;
     }
 
