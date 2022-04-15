@@ -25,6 +25,7 @@
                 <label for="exampleFormControlTextarea1">OutPut data</label>
                 
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="20">${xml_data}</textarea>
+    
             </div>
             <button type="button" class="btn btn-outline-primary">Home</button>
         </form>
