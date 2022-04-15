@@ -133,4 +133,13 @@ public class MainController {
         mv.setViewName("hello");
         return mv;
     }
+
+    @PostMapping("/error") 
+    public ModelAndView error(HttpServletRequest request, ModelAndView mv) {
+        mv.setViewName("error");
+        
+        return mv;
+    }
+
+
 }

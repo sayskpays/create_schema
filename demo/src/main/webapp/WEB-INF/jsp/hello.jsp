@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<%@ page errorPage = "/error.jsp" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,10 +20,7 @@
     <div class="wrap">
         <form>
             <div class="form-group">
-                <label for="exampleFormControlSelect1">Select Data Name</label>
-            </div>
-            <div class="form-group">
-                <label for="exampleFormControlTextarea1">OutPut data</label>
+                <h3 for="exampleFormControlTextarea1">Output Data</h3>
                 
                 <div class="textarea-group">
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="15">${xml_data}</textarea>
@@ -32,7 +29,7 @@
 
                 </div>   
             </div>
-            <button type="button" class="btn btn-outline-primary">Home</button>
+            <button type="button" class="btn btn-outline-primary" onclick="location.href='index.html'">Home</button>
         </form>
     </div>
 </body>
