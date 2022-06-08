@@ -1,9 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.ArrayList;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -47,7 +45,7 @@ public class MainController {
                 count++;
             }
         }
-
+        
         /*한줄씩 인덱스 값 구하기
         데이터 컬럼 값 리스트 뽑아내기
         */
@@ -64,15 +62,15 @@ public class MainController {
             if (dataColumn[i].contains("NOT") && dataColumn[i].contains("VARCHAR")) {
                 String xml_data = String.format("<xs:element name='%s' form='unqualified' type='%s'/>\r\n",columnList.get(i) ,form_varchar);
 
-                String select_schema01 = String.format("<QueryOutputCachedSchemaColumns>%s</QueryOutputCachedSchemaColumns>", columnList.get(i)).trim();
-                String select_schema02 = String.format("<QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>").trim();
-                String select_schema03 = String.format("<QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>").trim();
-                String select_schema04 = String.format("<QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>").trim();
+                String select_schema01 = String.format("<QueryOutputCachedSchemaColumns>%s</QueryOutputCachedSchemaColumns>", columnList.get(i)).trim()+"\r\n";
+                String select_schema02 = String.format("<QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>").trim()+"\r\n";
+                String select_schema03 = String.format("<QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>").trim()+"\r\n";
+                String select_schema04 = String.format("<QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>").trim()+"\r\n";
 
                 String record_data = String.format("<%s>\r\n<xs:value-of select=\"%s\"/>\r\n</%s>\r\n",columnList.get(i),columnList.get(i),columnList.get(i));
 
                 String[] select_schema = {select_schema01,select_schema02,select_schema03,select_schema04};
-                selectList.add(select_schema);              
+                selectList.add(select_schema);
                 create_data.add(xml_data);
                 recordList.add(record_data);
 
@@ -80,10 +78,10 @@ public class MainController {
             } else if (dataColumn[i].contains("NOT") && dataColumn[i].contains("NUMBER")) {
                 String xml_data = String.format("<xs:element name='%s' form='unqualified' type='%s'/>\r\n",columnList.get(i) ,type_number);
 
-                String select_schema01 = String.format("<QueryOutputCachedSchemaColumns>%s</QueryOutputCachedSchemaColumns>", columnList.get(i)).trim();
-                String select_schema02 = String.format("<QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>").trim();
-                String select_schema03 = String.format("<QueryOutputCachedSchemaDataTypesName>NUMBER</QueryOutputCachedSchemaDataTypesName>").trim();
-                String select_schema04 = String.format("<QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>").trim();
+                String select_schema01 = String.format("<QueryOutputCachedSchemaColumns>%s</QueryOutputCachedSchemaColumns>", columnList.get(i)).trim()+"\r\n";
+                String select_schema02 = String.format("<QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>").trim()+"\r\n";
+                String select_schema03 = String.format("<QueryOutputCachedSchemaDataTypesName>NUMBER</QueryOutputCachedSchemaDataTypesName>").trim()+"\r\n";
+                String select_schema04 = String.format("<QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>").trim()+"\r\n";
 
                 String record_data = String.format("<%s>\r\n<xs:value-of select=\"%s\"/>\r\n</%s>\r\n",columnList.get(i),columnList.get(i),columnList.get(i));
                 String[] select_schema = {select_schema01,select_schema02,select_schema03,select_schema04};
@@ -96,12 +94,12 @@ public class MainController {
             } else if (dataColumn[i].contains("VARCHAR")) {
                 String xml_data = String.format("<xs:element name='%s' form='unqualified' %s type='%s'/>\r\n",columnList.get(i) ,type_nill, form_varchar);
 
-                String select_schema01 = String.format("<QueryOutputCachedSchemaColumns>%s</QueryOutputCachedSchemaColumns>", columnList.get(i)).trim();
-                String select_schema02 = String.format("<QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>").trim();
-                String select_schema03 = String.format("<QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>").trim();
-                String select_schema04 = String.format("<QueryOutputCachedSchemaStatus>NillableElement</QueryOutputCachedSchemaStatus>").trim();
+                String select_schema01 = String.format("<QueryOutputCachedSchemaColumns>%s</QueryOutputCachedSchemaColumns>", columnList.get(i)).trim()+"\r\n";
+                String select_schema02 = String.format("<QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>").trim()+"\r\n";
+                String select_schema03 = String.format("<QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>").trim()+"\r\n";
+                String select_schema04 = String.format("<QueryOutputCachedSchemaStatus>NillableElement</QueryOutputCachedSchemaStatus>").trim()+"\r\n";
 
-                String record_data = String.format("<%s>\r\n<xs:copy-of select=\"%s\"/@xsi:nil>\r\n<xs:value-of select=\"%s\"/>\r\n</%s>\r\n",columnList.get(i),columnList.get(i),columnList.get(i),columnList.get(i));
+                String record_data = String.format("<%s>\r\n<xsl:copy-of select=\"%s\"/@xsi:nil/>\r\n<xsl:value-of select=\"%s\"/>\r\n</%s>\r\n",columnList.get(i),columnList.get(i),columnList.get(i),columnList.get(i));
                 String[] select_schema = {select_schema01,select_schema02,select_schema03,select_schema04};
                 selectList.add(select_schema);    
                 recordList.add(record_data);
@@ -110,11 +108,11 @@ public class MainController {
             } else if (dataColumn[i].contains("NUMBER")) {
                 String xml_data = String.format("<xs:element name='%s' form='unqualified' %s type='%s'/>\r\n", columnList.get(i),type_nill, type_number);
 
-                String select_schema01 = String.format("<QueryOutputCachedSchemaColumns>%s</QueryOutputCachedSchemaColumns>", columnList.get(i)).trim();
-                String select_schema02 = String.format("<QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>").trim();
-                String select_schema03 = String.format("<QueryOutputCachedSchemaDataTypesName>NUMBER</QueryOutputCachedSchemaDataTypesName>").trim();
-                String select_schema04 = String.format("<QueryOutputCachedSchemaStatus>NillableElement</QueryOutputCachedSchemaStatus>").trim();
-                String record_data = String.format("<%s>\r\n<xs:copy-of select=\"%s\"/@xsi:nil>\r\n<xs:value-of select=\"%s\"/>\r\n</%s>\r\n",columnList.get(i),columnList.get(i),columnList.get(i),columnList.get(i));
+                String select_schema01 = String.format("<QueryOutputCachedSchemaColumns>%s</QueryOutputCachedSchemaColumns>", columnList.get(i)).trim()+"\r\n";
+                String select_schema02 = String.format("<QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>").trim()+"\r\n";
+                String select_schema03 = String.format("<QueryOutputCachedSchemaDataTypesName>NUMBER</QueryOutputCachedSchemaDataTypesName>").trim()+"\r\n";
+                String select_schema04 = String.format("<QueryOutputCachedSchemaStatus>NillableElement</QueryOutputCachedSchemaStatus>").trim()+"\r\n";
+                String record_data = String.format("<%s>\r\n<xsl:copy-of select=\"%s\"/@xsi:nil/>\r\n<xsl:value-of select=\"%s\"/>\r\n</%s>\r\n",columnList.get(i),columnList.get(i),columnList.get(i),columnList.get(i));
                 String[] select_schema = {select_schema01,select_schema02,select_schema03,select_schema04};
                 selectList.add(select_schema);    
                 recordList.add(record_data);
@@ -136,6 +134,4 @@ public class MainController {
 
         return mv;
     }
-
-
 }
