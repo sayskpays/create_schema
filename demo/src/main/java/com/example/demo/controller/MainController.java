@@ -67,7 +67,7 @@ public class MainController {
                 String select_schema03 = String.format("<QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>").trim()+"\r\n";
                 String select_schema04 = String.format("<QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>").trim()+"\r\n";
 
-                String record_data = String.format("<%s>\r\n<xs:value-of select=\"%s\"/>\r\n</%s>\r\n",columnList.get(i),columnList.get(i),columnList.get(i));
+                String record_data = String.format("<%s>\r\n<xsl:value-of select=\"%s\"/>\r\n</%s>\r\n",columnList.get(i),columnList.get(i),columnList.get(i));
 
                 String[] select_schema = {select_schema01,select_schema02,select_schema03,select_schema04};
                 selectList.add(select_schema);
@@ -83,7 +83,7 @@ public class MainController {
                 String select_schema03 = String.format("<QueryOutputCachedSchemaDataTypesName>NUMBER</QueryOutputCachedSchemaDataTypesName>").trim()+"\r\n";
                 String select_schema04 = String.format("<QueryOutputCachedSchemaStatus>RequiredElement</QueryOutputCachedSchemaStatus>").trim()+"\r\n";
 
-                String record_data = String.format("<%s>\r\n<xs:value-of select=\"%s\"/>\r\n</%s>\r\n",columnList.get(i),columnList.get(i),columnList.get(i));
+                String record_data = String.format("<%s>\r\n<xsl:value-of select=\"%s\"/>\r\n</%s>\r\n",columnList.get(i),columnList.get(i),columnList.get(i));
                 String[] select_schema = {select_schema01,select_schema02,select_schema03,select_schema04};
 
                 selectList.add(select_schema);     
@@ -99,7 +99,7 @@ public class MainController {
                 String select_schema03 = String.format("<QueryOutputCachedSchemaDataTypesName>VARCHAR2</QueryOutputCachedSchemaDataTypesName>").trim()+"\r\n";
                 String select_schema04 = String.format("<QueryOutputCachedSchemaStatus>NillableElement</QueryOutputCachedSchemaStatus>").trim()+"\r\n";
 
-                String record_data = String.format("<%s>\r\n<xsl:copy-of select=\"%s\"/@xsi:nil/>\r\n<xsl:value-of select=\"%s\"/>\r\n</%s>\r\n",columnList.get(i),columnList.get(i),columnList.get(i),columnList.get(i));
+                String record_data = String.format("<%s>\r\n<xsl:copy-of select=\"%s/@xsi:nil\"/>\r\n<xsl:value-of select=\"%s\"/>\r\n</%s>\r\n",columnList.get(i),columnList.get(i),columnList.get(i),columnList.get(i));
                 String[] select_schema = {select_schema01,select_schema02,select_schema03,select_schema04};
                 selectList.add(select_schema);    
                 recordList.add(record_data);
@@ -112,7 +112,7 @@ public class MainController {
                 String select_schema02 = String.format("<QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>").trim()+"\r\n";
                 String select_schema03 = String.format("<QueryOutputCachedSchemaDataTypesName>NUMBER</QueryOutputCachedSchemaDataTypesName>").trim()+"\r\n";
                 String select_schema04 = String.format("<QueryOutputCachedSchemaStatus>NillableElement</QueryOutputCachedSchemaStatus>").trim()+"\r\n";
-                String record_data = String.format("<%s>\r\n<xsl:copy-of select=\"%s\"/@xsi:nil/>\r\n<xsl:value-of select=\"%s\"/>\r\n</%s>\r\n",columnList.get(i),columnList.get(i),columnList.get(i),columnList.get(i));
+                String record_data = String.format("<%s>\r\n<xsl:copy-of select=\"%s/@xsi:nil\"/>\r\n<xsl:value-of select=\"%s\"/>\r\n</%s>\r\n",columnList.get(i),columnList.get(i),columnList.get(i),columnList.get(i));
                 String[] select_schema = {select_schema01,select_schema02,select_schema03,select_schema04};
                 selectList.add(select_schema);    
                 recordList.add(record_data);
