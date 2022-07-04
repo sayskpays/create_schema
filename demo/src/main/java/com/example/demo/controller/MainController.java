@@ -32,6 +32,7 @@ public class MainController {
         String parameter = "parameter";
         // 폼에서 전달해주는 input data
         String data = request.getParameter("id");
+        
         String question = "?,";
         
     
@@ -67,6 +68,7 @@ public class MainController {
             index_data.add(indexData);
             columnList.add(dataColumn[i].substring(1,indexData));
 
+            
         }
 
         for (int i = 0; i < dataColumn.length; i++) {
