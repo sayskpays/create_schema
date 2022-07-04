@@ -27,7 +27,6 @@ public class MainController {
         String form_varchar = "xs:string";
         String type_number = "xs:decimal";
         String type_nill = "nillable='true'";
-
         // 폼에서 전달해주는 input data
         String data = request.getParameter("id");
     
@@ -59,7 +58,7 @@ public class MainController {
 
         for (int i = 0; i < dataColumn.length; i++) {
             // not null , string
-            if (dataColumn[i].contains("NOT") && dataColumn[i].contains("VARCHAR")) {
+            if (dataColumn[i].contains("NOT NULL ENABLE") && dataColumn[i].contains("VARCHAR")) {
                 String xml_data = String.format("<xs:element name='%s' form='unqualified' type='%s'/>\r\n",columnList.get(i) ,form_varchar);
 
                 String select_schema01 = String.format("<QueryOutputCachedSchemaColumns>%s</QueryOutputCachedSchemaColumns>", columnList.get(i)).trim()+"\r\n";
@@ -75,7 +74,7 @@ public class MainController {
                 recordList.add(record_data);
 
                 // not null , number
-            } else if (dataColumn[i].contains("NOT") && dataColumn[i].contains("NUMBER")) {
+            } else if (dataColumn[i].contains("NOT NULL ENABLE") && dataColumn[i].contains("NUMBER")) {
                 String xml_data = String.format("<xs:element name='%s' form='unqualified' type='%s'/>\r\n",columnList.get(i) ,type_number);
 
                 String select_schema01 = String.format("<QueryOutputCachedSchemaColumns>%s</QueryOutputCachedSchemaColumns>", columnList.get(i)).trim()+"\r\n";
@@ -91,7 +90,7 @@ public class MainController {
                 create_data.add(xml_data);
 
                 // nillable , string
-            } else if (dataColumn[i].contains("VARCHAR")) {
+            } else if (!(dataColumn[i].contains("NOT NULL ENABLE")) && dataColumn[i].contains("VARCHAR")) {
                 String xml_data = String.format("<xs:element name='%s' form='unqualified' %s type='%s'/>\r\n",columnList.get(i) ,type_nill, form_varchar);
 
                 String select_schema01 = String.format("<QueryOutputCachedSchemaColumns>%s</QueryOutputCachedSchemaColumns>", columnList.get(i)).trim()+"\r\n";
@@ -105,7 +104,7 @@ public class MainController {
                 recordList.add(record_data);
                 create_data.add(xml_data);
                 // nillable , number
-            } else if (dataColumn[i].contains("NUMBER")) {
+            } else if (!(dataColumn[i].contains("NOT NULL ENABLE")) && dataColumn[i].contains("NUMBER")) {
                 String xml_data = String.format("<xs:element name='%s' form='unqualified' %s type='%s'/>\r\n", columnList.get(i),type_nill, type_number);
 
                 String select_schema01 = String.format("<QueryOutputCachedSchemaColumns>%s</QueryOutputCachedSchemaColumns>", columnList.get(i)).trim()+"\r\n";
