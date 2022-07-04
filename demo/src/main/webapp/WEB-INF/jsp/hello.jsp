@@ -21,13 +21,15 @@
         <form>
             <div class="form-group">
                 <h3 for="exampleFormControlTextarea1">Output Data</h3>
-                
+                <hr>
+                <h4 for="exampleFormControlTextarea1">컬럼 총 갯수 : ${count}</h4>
                 <div class="textarea-group">
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="15"><c:forEach var="xml" items="${xml_data}">${xml}</c:forEach></textarea>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="15">${column_data}</textarea>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="15"><c:forEach var="record" items="${recordList}">${record}</c:forEach></textarea>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="15"><c:forEach var="tmp" items="${selectList}"><c:forEach var="select" items="${tmp}">${select}</c:forEach></c:forEach></textarea>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="15"><c:forEach var="parameter" items="${parameterList}">${parameter}</c:forEach></textarea>
+                <textarea class="form-control" id="exampleFormControlTextarea1" rows="15">${question}</textarea>
 
                 </div>   
             </div>

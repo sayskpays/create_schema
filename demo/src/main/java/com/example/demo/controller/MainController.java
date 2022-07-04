@@ -32,6 +32,8 @@ public class MainController {
         String parameter = "parameter";
         // 폼에서 전달해주는 input data
         String data = request.getParameter("id");
+        String question = "?,";
+        
     
         int count = 1;
         char[] words = data.toCharArray();
@@ -47,6 +49,14 @@ public class MainController {
                 count++;
             }
         }
+
+        /*
+         * 컬럼 갯수에 따른 ? 구하기 (수신 insert 적용)
+         * 
+         */
+
+        String sb = question.repeat(count);
+        sb = sb.substring(0, sb.length()-1);
         
         /*한줄씩 인덱스 값 구하기
         데이터 컬럼 값 리스트 뽑아내기
@@ -153,6 +163,8 @@ public class MainController {
         mv.addObject("xml_data", create_data);
         mv.addObject("column_data", columnList);
         mv.addObject("parameterList", parameterList);
+        mv.addObject("question", sb);
+        mv.addObject("count", count);
         mv.setViewName("hello");
         return mv;
     }
