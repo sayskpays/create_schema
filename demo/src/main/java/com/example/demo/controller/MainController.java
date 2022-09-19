@@ -73,7 +73,7 @@ public class MainController {
 
         for (int i = 0; i < dataColumn.length; i++) {
             // not null , string
-            if (dataColumn[i].contains("NOT NULL ENABLE") && dataColumn[i].contains("VARCHAR")) {
+            if (dataColumn[i].contains("NOT NULL") && dataColumn[i].contains("VARCHAR")) {
                 // XML schema
                 String xml_data = String.format("<xs:element name='%s' form='unqualified' type='%s'/>\r\n",columnList.get(i) ,form_varchar);
                 // Queryoutput
@@ -93,7 +93,7 @@ public class MainController {
                 parameterList.add(parameter_data);
 
                 // not null , number
-            } else if (dataColumn[i].contains("NOT NULL ENABLE") && dataColumn[i].contains("NUMBER")) {
+            } else if (dataColumn[i].contains("NOT NULL") && dataColumn[i].contains("NUMBER")) {
                 // XML schema
                 String xml_data = String.format("<xs:element name='%s' form='unqualified' type='%s'/>\r\n",columnList.get(i) ,type_number);
                 //QueryOutput
@@ -113,7 +113,7 @@ public class MainController {
                 parameterList.add(parameter_data);
 
                 // nillable , string
-            } else if (!(dataColumn[i].contains("NOT NULL ENABLE")) && dataColumn[i].contains("VARCHAR")) {
+            } else if (!(dataColumn[i].contains("NOT NULL")) && dataColumn[i].contains("VARCHAR")) {
                 // XML Schema
                 String xml_data = String.format("<xs:element name='%s' form='unqualified' %s type='%s'/>\r\n",columnList.get(i) ,type_nill, form_varchar);
 
@@ -134,7 +134,7 @@ public class MainController {
                 create_data.add(xml_data);
                 parameterList.add(parameter_data);
                 // nillable , number
-            } else if (!(dataColumn[i].contains("NOT NULL ENABLE")) && dataColumn[i].contains("NUMBER")) {
+            } else if (!(dataColumn[i].contains("NOT NULL")) && dataColumn[i].contains("NUMBER")) {
 
                 // xml Schema
                 String xml_data = String.format("<xs:element name='%s' form='unqualified' %s type='%s'/>\r\n", columnList.get(i),type_nill, type_number);

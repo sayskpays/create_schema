@@ -23,11 +23,15 @@
                 <h3 for="exampleFormControlTextarea1">Output Data</h3>
                 <hr>
                 <h4 for="exampleFormControlTextarea1">컬럼 총 갯수 : ${count}</h4>
+                <br>
                 <div class="textarea-group">
+                    <h4>스키마 생성 적용 부분</h4>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="15"><c:forEach var="xml" items="${xml_data}">${xml}</c:forEach></textarea>
+                    <h4>송신 적용 부분</h4>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="15">${column_data}</textarea>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="15"><c:forEach var="record" items="${recordList}">${record}</c:forEach></textarea>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="15"><c:forEach var="tmp" items="${selectList}"><c:forEach var="select" items="${tmp}">${select}</c:forEach></c:forEach></textarea>
+                    <h4>수신 적용 부분</h4>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="15"><c:forEach var="parameter" items="${parameterList}">${parameter}</c:forEach></textarea>
                 <textarea class="form-control" id="exampleFormControlTextarea1" rows="15">${question}</textarea>
 
