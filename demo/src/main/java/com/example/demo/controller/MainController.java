@@ -35,7 +35,7 @@ public class MainController {
         
         String question = "?,";
         
-    
+
         int count = 1;
         char[] words = data.toCharArray();
         
@@ -53,7 +53,6 @@ public class MainController {
 
         /*
          * 컬럼 갯수에 따른 ? 구하기 (수신 insert 적용)
-         * 
          */
 
         String sb = question.repeat(count);
@@ -68,7 +67,6 @@ public class MainController {
             index_data.add(indexData);
             columnList.add(dataColumn[i].substring(1,indexData));
 
-            
         }
 
         for (int i = 0; i < dataColumn.length; i++) {
@@ -134,6 +132,7 @@ public class MainController {
                 create_data.add(xml_data);
                 parameterList.add(parameter_data);
                 // nillable , number
+
             } else if (!(dataColumn[i].contains("NOT NULL")) && dataColumn[i].contains("NUMBER")) {
 
                 // xml Schema
