@@ -16,6 +16,12 @@
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -40,11 +46,16 @@
 		 <artifactId>jstl</artifactId> 
 		 <version>1.2</version> 
 		 </dependency>
-		 <dependency>
+		<dependency>
 		  <groupId>taglibs</groupId>
 		   <artifactId>standard</artifactId>
 		    <version>1.1.2</version> 
-			</dependency>
+		</dependency>
+		<dependency>
+		  <groupId>commons-io</groupId>
+		   <artifactId>commons-io</artifactId>
+		    <version>2.11.0</version> 
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

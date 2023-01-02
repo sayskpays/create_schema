@@ -114,7 +114,6 @@ public class MainController {
             } else if (!(dataColumn[i].contains("NOT NULL")) && dataColumn[i].contains("VARCHAR")) {
                 // XML Schema
                 String xml_data = String.format("<xs:element name='%s' form='unqualified' %s type='%s'/>\r\n",columnList.get(i) ,type_nill, form_varchar);
-
                 //QueryOutput
                 String select_schema01 = String.format("<QueryOutputCachedSchemaColumns>%s</QueryOutputCachedSchemaColumns>", columnList.get(i)).trim()+"\r\n";
                 String select_schema02 = String.format("<QueryOutputCachedSchemaDataTypes>12</QueryOutputCachedSchemaDataTypes>").trim()+"\r\n";
