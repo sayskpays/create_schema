@@ -2,6 +2,11 @@ package com.example.demo;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -13,7 +18,6 @@ public class MakeInterface {
     // filed
     private static boolean env = false; // UAT == true, PROD == false
     private static boolean transmission = false; // SND == true , RCV == false
-    private static boolean fileExsist = false;
 
     // method
     private static boolean envSet(String filePath) {
@@ -49,15 +53,10 @@ public class MakeInterface {
 
     // origin 인터페이스 경로에 있는 프로세스 명만 추출
     private static String getOriginInterfaceName(String filePath) {
-        String originInterfaceName = filePath.substring(filePath.length() - 31, filePath.length());
+        String[] originInterfaceName = filePath.split("\\\\");
+        String id = originInterfaceName[originInterfaceName.length -1];
 
-        return originInterfaceName;
-    }
-    // origin 스키마 경로에 있는 스키마 명만 추출
-    private static String getOriginSchemaName(String filePath) {
-        String originInterfaceName = filePath.substring(filePath.length() - 16, filePath.length());
-
-        return originInterfaceName;
+        return id;
     }
 
     // 인터페이스 폴더 경로 Check
@@ -86,9 +85,7 @@ public class MakeInterface {
         return fileEx;
     }
 
-
-
-    private static boolean copyFile(String inFilePath, String originFile, String outInterface, String outSchema) {
+    private static String copyFile(String inFilePath, String originFile, String outInterface, String outSchema) {
 
         // origin 인터페이스 파일 경로 설정
         StringBuilder inputSb = new StringBuilder(inFilePath);
@@ -113,13 +110,13 @@ public class MakeInterface {
             FileUtils.copyFile(orgFile, outFile);
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
 
-        return true;
+        return sb.toString();
     }
 
-    private static boolean copySchema(String schemaStandard, String outSchema, String newSchemaName) {
+    private static String copySchema(String schemaStandard, String outSchema, String newSchemaName) {
         // origin 스키마 파일 경로 설정
         StringBuilder originSchema = new StringBuilder(schemaStandard);
         originSchema.append("\\");
@@ -140,18 +137,46 @@ public class MakeInterface {
             FileUtils.copyFile(originSchemaFile, newSchemaFile);
         } catch (IOException e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
 
-        return true;
+        return newSchema.toString();
+    }
+
+    // 파일 내부 replace
+    private static boolean replaceFile(String fileKind, String defaultInterface, String defaultSchema) {
+
+        Path path = Paths.get(fileKind);
+        Charset cs = StandardCharsets.UTF_8;
+
+        List<String> dataList = new ArrayList<>();
+
+        String originName = getOriginInterfaceName(fileKind);
+        System.out.println("originName >> "+ originName);
+        System.out.println("defaultInterface >> "+ defaultInterface);
+        System.out.println("defaultSchema >> "+ defaultSchema);
+
+        try {
+            dataList = Files.readAllLines(path, cs);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        
+        for (String readline : dataList) {
+            
+        }
+
+        return false;
+
     }
 
     public static void main(String[] args) {
-
         List<String> interfacefileList = new ArrayList<>();
         List<String> schemaFileList = new ArrayList<>();
         List<String> newInterfaceName = new ArrayList<>();
         List<String> newSchemaeName = new ArrayList<>();
+
         Scanner in = new Scanner(System.in);
 
         System.out.println("Input Origin Interface Path >>>");
@@ -183,14 +208,18 @@ public class MakeInterface {
 
         /////// 스키마 관련 복사 메소드 //////////////
         scanDir(schemaStandard, schemaFileList);
-        String defalutSchema = getOriginSchemaName(schemaFileList.get(2));
-        
+        String defalutSchema = getOriginInterfaceName(schemaFileList.get(2));
 
         // 파일 탐색 후 똑같은 인터페이스가 있지 않은 경우 파일 복사
         if (isExistFile(interfacefileList) && isExistSchema(schemaFileList)) {
             for (int i = 0; i < newInterfaceName.size(); i++) {
-                copyFile(fileStandard, defalutInterface, newInterfaceName.get(i), newSchemaeName.get(i));
-                copySchema(schemaStandard, defalutSchema, newSchemaeName.get(i));
+                String cf = copyFile(fileStandard, defalutInterface, newInterfaceName.get(i), newSchemaeName.get(i));
+                String cs = copySchema(schemaStandard, defalutSchema, newSchemaeName.get(i));
+
+                // 파일 replace 로직
+                replaceFile(cf, defalutInterface, defalutSchema);
+                replaceFile(cs,defalutInterface ,defalutSchema);
+
             }
         } else {
             System.out.println("인터페이스 또는 스키마 경로가 잘못 되었습니다.");
