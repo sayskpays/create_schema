@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -170,7 +168,7 @@ public class MakeInterface {
         System.out.println("defaultInterface >>> " + defaultInterface);
         System.out.println("defaultSchema >>> " + defaultSchema);
 
-        System.out.println("defaultInterface.substring(0, 10) >>> "+defaultInterface.substring(0, 10));
+        System.out.println("defaultInterface.substring(0, 10) >>> " + defaultInterface.substring(0, 10));
         System.out.println("defaultInterface substring >>> " + defaultInterface.substring(11, 23));
         System.out.println("changeSchemaName >>> " + changeSchemaName);
 
@@ -179,18 +177,20 @@ public class MakeInterface {
 
         try {
             // dataList = Files.readAllLines(path, cs);
-            String data = FileUtils.readFileToString(file,"UTF-8");
-            
+            String data = FileUtils.readFileToString(file, "UTF-8");
+
             // 인터페이스 파일 수정 시
             if (updateInterfaceName != null) {
                 data = data.replace(defaultInterface.substring(0, 10), updateInterfaceName);
-                FileUtils.writeStringToFile(file, data,"UTF-8");
+                FileUtils.writeStringToFile(file, data, "UTF-8");
                 data = data.replace(defaultInterface.substring(11, 23), changeSchemaName);
-                FileUtils.writeStringToFile(file, data,"UTF-8");
+                FileUtils.writeStringToFile(file, data, "UTF-8");
+                data = data.replace(defaultInterface.substring(11, 20).concat("TMI"), changeSchemaName.substring(0,9).concat("TMI"));
+                FileUtils.writeStringToFile(file, data, "UTF-8");
                 // 스키마 파일 수정 시
             } else if (updateSchemaName != null) {
                 data = data.replace(defaultSchema.substring(0, 12), updateSchemaName);
-                FileUtils.writeStringToFile(file, data,"UTF-8");
+                FileUtils.writeStringToFile(file, data, "UTF-8");
             }
 
         } catch (IOException e) {
@@ -198,7 +198,7 @@ public class MakeInterface {
         }
 
         // for (String readline : dataList) {
-        //     System.out.println(readline);
+        // System.out.println(readline);
         // }
 
         return false;
