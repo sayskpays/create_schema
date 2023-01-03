@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -54,7 +53,7 @@ public class MakeInterface {
     // origin 인터페이스 경로에 있는 프로세스 명만 추출
     private static String getOriginInterfaceName(String filePath) {
         String[] originInterfaceName = filePath.split("\\\\");
-        String id = originInterfaceName[originInterfaceName.length -1];
+        String id = originInterfaceName[originInterfaceName.length - 1];
 
         return id;
     }
@@ -144,28 +143,63 @@ public class MakeInterface {
     }
 
     // 파일 내부 replace
-    private static boolean replaceFile(String fileKind, String defaultInterface, String defaultSchema) {
+    private static boolean replaceFile(String fileKind, String defaultInterface, String defaultSchema,
+            String changeSchemaName) {
 
-        Path path = Paths.get(fileKind);
+        // Path path = Paths.get(fileKind);
         Charset cs = StandardCharsets.UTF_8;
+        File file = new File(fileKind);
 
         List<String> dataList = new ArrayList<>();
+        String updateInterfaceName = null;
+        String updateSchemaName = null;
 
-        String originName = getOriginInterfaceName(fileKind);
-        System.out.println("originName >> "+ originName);
-        System.out.println("defaultInterface >> "+ defaultInterface);
-        System.out.println("defaultSchema >> "+ defaultSchema);
+        // 수정되는 인터페이스 명과 스키마명
+
+        // 받아온게 인터페이스 명일 경우
+        if (getOriginInterfaceName(fileKind).length() > 18) {
+            updateInterfaceName = getOriginInterfaceName(fileKind).substring(0, 10);
+
+            // 받아온게 스키마 명일 경우
+        } else {
+            updateSchemaName = getOriginInterfaceName(fileKind).substring(0, 12);
+        }
+
+        System.out.println("updateInterfaceName >>> " + updateInterfaceName);
+        System.out.println("updateSchemaName >>> " + updateSchemaName);
+        System.out.println("defaultInterface >>> " + defaultInterface);
+        System.out.println("defaultSchema >>> " + defaultSchema);
+
+        System.out.println("defaultInterface.substring(0, 10) >>> "+defaultInterface.substring(0, 10));
+        System.out.println("defaultInterface substring >>> " + defaultInterface.substring(11, 23));
+        System.out.println("changeSchemaName >>> " + changeSchemaName);
+
+        // updateInterfaceName , updateSchemaName null 값에 따라서 인터페이스 수정이냐 스키마 수정이냐
+        // 로직 분기
 
         try {
-            dataList = Files.readAllLines(path, cs);
+            // dataList = Files.readAllLines(path, cs);
+            String data = FileUtils.readFileToString(file,"UTF-8");
+            
+            // 인터페이스 파일 수정 시
+            if (updateInterfaceName != null) {
+                data = data.replace(defaultInterface.substring(0, 10), updateInterfaceName);
+                FileUtils.writeStringToFile(file, data,"UTF-8");
+                data = data.replace(defaultInterface.substring(11, 23), changeSchemaName);
+                FileUtils.writeStringToFile(file, data,"UTF-8");
+                // 스키마 파일 수정 시
+            } else if (updateSchemaName != null) {
+                data = data.replace(defaultSchema.substring(0, 12), updateSchemaName);
+                FileUtils.writeStringToFile(file, data,"UTF-8");
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        
-        for (String readline : dataList) {
-            
-        }
+        // for (String readline : dataList) {
+        //     System.out.println(readline);
+        // }
 
         return false;
 
@@ -217,8 +251,8 @@ public class MakeInterface {
                 String cs = copySchema(schemaStandard, defalutSchema, newSchemaeName.get(i));
 
                 // 파일 replace 로직
-                replaceFile(cf, defalutInterface, defalutSchema);
-                replaceFile(cs,defalutInterface ,defalutSchema);
+                replaceFile(cf, defalutInterface, defalutSchema, newSchemaeName.get(i));
+                replaceFile(cs, defalutInterface, defalutSchema, newSchemaeName.get(i));
 
             }
         } else {
