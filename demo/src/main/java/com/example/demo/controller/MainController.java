@@ -4,7 +4,15 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.example.demo.MakeVO;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 
 @Controller
 
@@ -175,4 +183,16 @@ public class MainController {
 
         return mv;
     }
+
+    @PostMapping(value="HttpClientResource")
+    @ResponseBody
+    public MakeVO getMethodName(@RequestBody MakeVO vo) {
+        System.out.println(vo.getName());
+        System.out.println(vo.getPassword());
+        System.out.println(vo);
+    
+        
+        return vo;
+    }
+    
 }
